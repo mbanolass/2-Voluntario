@@ -1,0 +1,38 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+	int media=0;
+    int numeros[10];
+    for (int i = 0; i < 10; i++) {
+        cout << "Ingresa un numero entero: ";
+        cin >> numeros[i];
+    }
+
+    // Ordenar de mayor a menor
+    sort(numeros, numeros + 10, greater<int>());
+
+    // Encontrar los tres mayores y la media
+    int mayores[3] = {numeros[0], numeros[1], numeros[2]};
+    media = (mayores[0] + mayores[1] + mayores[2]) / 3;
+    cout << "Los tres mayores numeros son: " << mayores[0] << " " << mayores[1] << " " << mayores[2] << endl;
+    cout << "La media de los tres mayores es: " << media << endl;
+
+    // Encontrar los tres mayores pares
+    int mayores_pares[3] = {0, 0, 0};
+    int j = 0;
+    for (int i = 0; i < 10; i++) {
+        if (numeros[i] % 2 == 0) {
+            mayores_pares[j] = numeros[i];
+            j++;
+            if (j == 3) {
+                break;
+            }
+        }
+    }
+    cout << "Los tres mayores numeros pares son: " << mayores_pares[0] << " " << mayores_pares[1] << " " << mayores_pares[2];
+
+    return 0;
+}
