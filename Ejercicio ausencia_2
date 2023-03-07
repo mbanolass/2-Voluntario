@@ -1,0 +1,69 @@
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+using namespace std;
+
+bool comprobarRepetidos(int *matriz[3]){
+    bool repetido = false;
+    int numeros[10] = {0}; // Inicializo el arreglo en cero
+    for(int filas=0; filas<3; filas++){
+        for(int col=0; col<3; col++){
+            numeros[*(*(matriz+filas)+col)]++;
+            if(numeros[*(*(matriz+filas)+col)] > 1){
+                repetido = true;
+                break;
+            }
+        }
+        if(repetido) break;
+    }
+    return repetido;
+}
+
+int sumaPrimeraFila(int *matriz[3]){
+    int suma = 0;
+    for(int col=0; col<3; col++){
+        suma += *(*(matriz)+col);
+    }
+    return suma;
+}
+
+int main(){
+    long semillita;
+    int filas,col;
+    int *matriz[3];
+
+    semillita=time(0);
+    srand(semillita);
+
+    // Genero matriz aleatoria
+    do{
+        for(filas=0;filas<3;filas++){
+            // Reservo memoria para las filas
+            matriz[filas]=(int *) malloc(3*sizeof(int));
+            for(col=0;col<3;col++){    
+                *(*(matriz+filas)+col)= rand()%10;
+            }    
+        }
+    }while(comprobarRepetidos(matriz)); // Verifico que no haya números repetidos
+
+    // Muestro matriz
+    for(filas=0;filas<3;filas++){
+        for(col=0;col<3;col++){    
+            printf("%d ",*(*(matriz+filas)+col));
+        }
+        printf("\n");
+    }
+
+    // Calculo suma de primera fila
+    int suma = sumaPrimeraFila(matriz);
+    printf("La suma de la primera fila es: %d\n", suma);
+    
+    // Liberar memoria de la matriz
+    for(filas=0; filas<3; filas++){
+        free(matriz[filas]);
+    }
+
+    return 0;
+}
